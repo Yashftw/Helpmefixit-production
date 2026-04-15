@@ -1,0 +1,162 @@
+{
+  "users": [
+    {
+      "id": "e4acc45b-f30c-490b-ac80-63896e2b55fd",
+      "name": "Anurag Nayak",
+      "email": "anuragnayak004@gmail.com",
+      "passwordHash": "0daab13bb0b2cd4e978274a63e59ccfb:355fa1fe7edf7e9701ebe113dee163ad164d829213a6b27056627a9d0d6f5594cc7130e46a19a7b93fe2dbdce698c4d0c6d7aa19cd66e190ed981160d6df2e61",
+      "createdAt": "2026-04-15T20:56:31.405Z"
+    },
+    {
+      "id": "97ae58b5-9668-4de9-aa75-274e0972653a",
+      "name": "Test User",
+      "email": "testuser1776286986@mail.com",
+      "passwordHash": "b7937972add3870a515ce314e1314475:d95e051e1b478acc488b03e5c97e9e6f03aa7f9c5652ef8438abaa56731bce54cb88562353a5393a7778856a3a2efb1ec09e6327074a838f296961ca9fb50842",
+      "createdAt": "2026-04-15T21:03:06.971Z"
+    },
+    {
+      "id": "6eec8d68-6d82-4e1c-8af5-58a361abf7a3",
+      "name": "Adult User",
+      "email": "testadult1776287307@mail.com",
+      "passwordHash": "8969d98e04f60f13515a6432d49c6e46:9b0d63c245d6aa6b76e6721c1c1dc912301aa44e7122872d8310c8a8374054858f7a94483c8eb7a825f4dab50c372f869106df3f91ee765ca18275963754cb8c",
+      "createdAt": "2026-04-15T21:08:28.296Z"
+    },
+    {
+      "id": "d6a39771-407c-4dab-8c89-d11cdbd8b6f0",
+      "name": "Map Poster",
+      "email": "mapposter1776288370@mail.com",
+      "passwordHash": "ee27afde2a8a183b72ff65cf7055f51c:ec9a830930f42033991d2a3f53074a6f09d0a29f0b0d6b442e80c4840669ff3f9588781fede54532f09a1e71bafc49a017653b2a8620a28dad428985a30b0071",
+      "createdAt": "2026-04-15T21:26:10.912Z"
+    },
+    {
+      "id": "f421040c-182e-4507-a4a0-f0a330a47c26",
+      "name": "Anurag Nayak",
+      "email": "anuragnayak4@gmail.com",
+      "passwordHash": "dc17255e7d816e4356e87827da65112a:7bb6a0c8e08e1a006ca6e88c7e5efe4e8ff2df5bb42389d457e0104bbb7118f51907167effacf8e4d218f5569d2eb6685b7a13fd22900c5fbe24798392612a50",
+      "createdAt": "2026-04-15T22:51:37.035Z"
+    }
+  ],
+  "profiles": [
+    {
+      "userId": "97ae58b5-9668-4de9-aa75-274e0972653a",
+      "occupation": "Frontend Developer",
+      "goal": "find-work",
+      "age": 24,
+      "updatedAt": "2026-04-15T21:03:07.034Z"
+    },
+    {
+      "userId": "6eec8d68-6d82-4e1c-8af5-58a361abf7a3",
+      "occupation": "Engineer",
+      "goal": "find-work",
+      "age": 17,
+      "updatedAt": "2026-04-15T21:08:28.383Z"
+    },
+    {
+      "userId": "f421040c-182e-4507-a4a0-f0a330a47c26",
+      "occupation": "",
+      "goal": "",
+      "bio": "",
+      "interest": "",
+      "profileImage": "",
+      "updatedAt": "2026-04-15T22:52:12.023Z"
+    }
+  ],
+  "gigs": [
+    {
+      "id": 1,
+      "title": "Fix React auth bug",
+      "price": 80,
+      "category": "Web",
+      "urgency": "Urgent",
+      "dev": "Sarah K.",
+      "rating": 4.9,
+      "lat": 40.7132,
+      "lng": -74.007,
+      "description": "OAuth callback loops for Safari users. Needs quick triage and patch."
+    },
+    {
+      "id": 2,
+      "title": "WordPress site down",
+      "price": 120,
+      "category": "Web",
+      "urgency": "ASAP",
+      "dev": "Mike R.",
+      "rating": 4.7,
+      "lat": 40.7118,
+      "lng": -74.0033,
+      "description": "Production 500 errors after plugin deployment, checkout is blocked."
+    },
+    {
+      "id": 3,
+      "title": "iOS app crash fix",
+      "price": 150,
+      "category": "Mobile",
+      "urgency": "Today",
+      "dev": "Alex T.",
+      "rating": 4.8,
+      "lat": 40.716,
+      "lng": -74.001,
+      "description": "React Native app crashes on launch for iOS 17. Need root-cause analysis."
+    },
+    {
+      "id": 4,
+      "title": "Stripe webhook setup",
+      "price": 60,
+      "category": "Backend",
+      "urgency": "Flexible",
+      "dev": "Jordan L.",
+      "rating": 4.6,
+      "lat": 40.709,
+      "lng": -74.012,
+      "description": "Implement secure webhook verification and event handling pipeline."
+    },
+    {
+      "id": 5,
+      "title": "DB query optimization",
+      "price": 200,
+      "category": "Backend",
+      "urgency": "This week",
+      "dev": "Chris P.",
+      "rating": 5,
+      "lat": 40.718,
+      "lng": -74.009,
+      "description": "Slow PostgreSQL reads on hot endpoints. Need indexes and SQL tuning."
+    },
+    {
+      "id": 6,
+      "title": "Model deployment support",
+      "price": 250,
+      "category": "AI",
+      "urgency": "Today",
+      "dev": "Priya S.",
+      "rating": 4.9,
+      "lat": 40.715,
+      "lng": -74.014,
+      "description": "Ship existing model behind an API with monitoring and autoscaling."
+    },
+    {
+      "id": 7,
+      "title": "React Native crash",
+      "price": 90,
+      "category": "Mobile",
+      "urgency": "Urgent",
+      "dev": "Tom W.",
+      "rating": 4.5,
+      "lat": 40.719,
+      "lng": -74.005,
+      "description": "Android image rendering crash after latest release."
+    },
+    {
+      "id": 8,
+      "title": "CSS layout broken",
+      "price": 45,
+      "category": "Debugging",
+      "urgency": "ASAP",
+      "dev": "Nina C.",
+      "rating": 4.8,
+      "lat": 40.7125,
+      "lng": -74.015,
+      "description": "Responsive layout fails between tablet breakpoints."
+    }
+  ]
+}
