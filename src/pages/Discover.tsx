@@ -2,6 +2,10 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import { MapPin, Star, Clock, DollarSign, X } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "@/lib/supabase";
+import { acceptGigAction } from "@/lib/api";
+import { toast } from "sonner";
 
 interface Gig {
   id: number;
@@ -16,6 +20,9 @@ interface Gig {
   y: number;
 }
 
+// NOTE: These are dummy gigs. If you want real connections to work,
+// you will need to test this on an actual gig that was created in your Supabase DB,
+// because 'acceptGigAction' looks for the real gig matching the ID!
 const gigs: Gig[] = [
   { id: 1, title: "Fix React auth bug", price: "₹6500", distance: "0.3 mi", rating: 4.9, urgency: "Urgent", description: "Login flow breaks after OAuth redirect. Need someone who knows Supabase auth well.", dev: "Sarah K.", x: 30, y: 35 },
   { id: 2, title: "WordPress site down", price: "₹9500", distance: "0.7 mi", rating: 4.7, urgency: "ASAP", description: "E-commerce site throwing 500 errors after plugin update. Revenue loss per hour.", dev: "Mike R.", x: 55, y: 25 },
@@ -27,22 +34,47 @@ const gigs: Gig[] = [
 const Discover = () => {
   const [selected, setSelected] = useState<Gig | null>(null);
 
+  // 1. ADDED: Routing navigator
+  const navigate = useNavigate();
+
+  // 2. ADDED: The connection handler function
+  const handleAcceptJob = async (gigId: number) => {
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        toast.error("Please login to accept jobs.");
+        return;
+      }
+
+      toast.loading("Setting up direct connection...");
+
+      const connection = await acceptGigAction(session.access_token, gigId);
+
+      toast.dismiss();
+      toast.success("Gig accepted! Transferring to chat...");
+
+      navigate(`/connection/${connection.id}`);
+
+    } catch (error: any) {
+      console.error(error);
+      toast.dismiss();
+      toast.error(error.message || "Failed to connect to this job.");
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
 
       {/* Map area */}
       <div className="flex-1 relative pt-20 bg-secondary/30">
-        {/* Simulated map background */}
         <div className="absolute inset-0 bg-gradient-to-br from-secondary via-background to-secondary/50">
-          {/* Grid lines */}
           <div className="absolute inset-0 opacity-[0.04]" style={{
             backgroundImage: "linear-gradient(hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)",
             backgroundSize: "60px 60px"
           }} />
         </div>
 
-        {/* Floating gig pins */}
         {gigs.map((gig) => (
           <motion.button
             key={gig.id}
@@ -58,7 +90,6 @@ const Discover = () => {
               <div className="relative w-10 h-10 rounded-full gradient-primary shadow-glow flex items-center justify-center hover:scale-110 transition-transform">
                 <MapPin className="w-4 h-4 text-primary-foreground" />
               </div>
-              {/* Hover tooltip */}
               <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
                 <div className="glass-surface rounded-xl px-3 py-2 shadow-card whitespace-nowrap">
                   <p className="text-xs font-semibold">{gig.title}</p>
@@ -69,7 +100,6 @@ const Discover = () => {
           </motion.button>
         ))}
 
-        {/* Sidebar floating cards */}
         <div className="absolute top-24 right-4 w-80 space-y-3 z-20 max-h-[calc(100vh-8rem)] overflow-y-auto pr-1">
           {gigs.map((gig, i) => (
             <motion.button
@@ -93,7 +123,6 @@ const Discover = () => {
           ))}
         </div>
 
-        {/* Detail panel */}
         <AnimatePresence>
           {selected && (
             <motion.div
@@ -119,7 +148,11 @@ const Discover = () => {
                   <span className="flex items-center gap-1.5 text-muted-foreground"><MapPin className="w-4 h-4 text-primary" />{selected.distance}</span>
                   <span className="flex items-center gap-1.5 text-muted-foreground"><Star className="w-4 h-4 text-primary" />{selected.rating}</span>
                 </div>
-                <button className="w-full py-3.5 rounded-2xl gradient-primary text-primary-foreground font-semibold shadow-glow hover:scale-[1.02] transition-transform">
+                {/* 3. ADDED: onClick event on the Accept Button */}
+                <button
+                  onClick={() => handleAcceptJob(selected.id)}
+                  className="w-full py-3.5 rounded-2xl gradient-primary text-primary-foreground font-semibold shadow-glow hover:scale-[1.02] transition-transform"
+                >
                   Accept This Job
                 </button>
               </div>
