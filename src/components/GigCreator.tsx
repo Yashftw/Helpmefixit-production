@@ -36,12 +36,12 @@ const GigCreator = ({ token, location, onGigCreated }: GigCreatorProps) => {
 
   const handleCreate = async () => {
     setError("");
-    if (!location) {
-      setError("Location is required to post a nearby gig.");
+    if (!title.trim() || !description.trim() || Number(price) <= 0) {
+      setError("Please fill out Title, Description, and a valid Price.");
       return;
     }
-    if (!canSubmit) {
-      setError("Please complete all gig details.");
+    if (!location) {
+      setError("Location is required. Please enable location permissions.");
       return;
     }
 
@@ -150,7 +150,7 @@ const GigCreator = ({ token, location, onGigCreated }: GigCreatorProps) => {
         whileHover={{ scale: 1.01 }}
         whileTap={{ scale: 0.98 }}
         onClick={handleCreate}
-        disabled={loading || !canSubmit}
+        disabled={loading}
         className="mt-5 w-full rounded-2xl gradient-primary py-3.5 text-sm font-semibold text-primary-foreground shadow-glow flex items-center justify-center gap-2"
       >
         {loading ? "Publishing gig..." : "Publish gig"}
