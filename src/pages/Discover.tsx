@@ -20,9 +20,6 @@ interface Gig {
   y: number;
 }
 
-// NOTE: These are dummy gigs. If you want real connections to work,
-// you will need to test this on an actual gig that was created in your Supabase DB,
-// because 'acceptGigAction' looks for the real gig matching the ID!
 const gigs: Gig[] = [
   { id: 1, title: "Fix React auth bug", price: "₹6500", distance: "0.3 mi", rating: 4.9, urgency: "Urgent", description: "Login flow breaks after OAuth redirect. Need someone who knows Supabase auth well.", dev: "Sarah K.", x: 30, y: 35 },
   { id: 2, title: "WordPress site down", price: "₹9500", distance: "0.7 mi", rating: 4.7, urgency: "ASAP", description: "E-commerce site throwing 500 errors after plugin update. Revenue loss per hour.", dev: "Mike R.", x: 55, y: 25 },
@@ -34,10 +31,10 @@ const gigs: Gig[] = [
 const Discover = () => {
   const [selected, setSelected] = useState<Gig | null>(null);
 
-  // 1. ADDED: Routing navigator
+  // Connect the Router for navigation
   const navigate = useNavigate();
 
-  // 2. ADDED: The connection handler function
+  // The logic that gets triggered when you click the button 
   const handleAcceptJob = async (gigId: number) => {
     try {
       const { data: { session } } = await supabase.auth.getSession();
@@ -66,7 +63,6 @@ const Discover = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
 
-      {/* Map area */}
       <div className="flex-1 relative pt-20 bg-secondary/30">
         <div className="absolute inset-0 bg-gradient-to-br from-secondary via-background to-secondary/50">
           <div className="absolute inset-0 opacity-[0.04]" style={{
@@ -148,7 +144,10 @@ const Discover = () => {
                   <span className="flex items-center gap-1.5 text-muted-foreground"><MapPin className="w-4 h-4 text-primary" />{selected.distance}</span>
                   <span className="flex items-center gap-1.5 text-muted-foreground"><Star className="w-4 h-4 text-primary" />{selected.rating}</span>
                 </div>
-                {/* 3. ADDED: onClick event on the Accept Button */}
+                {/* 
+                   THE FIX IS HERE: The onClick attribute now successfully binds
+                   the Click Event to the actual `handleAcceptJob` logic! 
+                */}
                 <button
                   onClick={() => handleAcceptJob(selected.id)}
                   className="w-full py-3.5 rounded-2xl gradient-primary text-primary-foreground font-semibold shadow-glow hover:scale-[1.02] transition-transform"
