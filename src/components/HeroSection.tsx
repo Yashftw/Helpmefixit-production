@@ -29,9 +29,9 @@ const HeroSection = () => {
           transition={{ duration: 0.9, delay: 0.15, ease: "easeOut" }}
           className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight max-w-5xl leading-[1.05]"
         >
-          Fix Real Problems.{" "}
+          Tech BROKEN?!.{" "}
           <span className="bg-clip-text text-transparent gradient-primary inline-block">
-            Right Where You Are.
+            Get a local developer here in under an hour.
           </span>
         </motion.h1>
 
@@ -41,8 +41,7 @@ const HeroSection = () => {
           transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
           className="mt-6 text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed"
         >
-          Connect with skilled developers nearby or find freelance gigs in your area.
-          The immediacy of ride-sharing meets the power of a creative marketplace.
+          Broken laptop. Website down. App not working. Whatever your tech problem is — stop Googling and get a real developer who can actually fix it. No bullshit. No waiting days. Just local devs ready to show up.
         </motion.p>
 
         <motion.div
