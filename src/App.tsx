@@ -8,6 +8,7 @@ import Index from "./pages/Index.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import SelectMode from "./pages/SelectMode.tsx";
 import Discover from "./pages/Discover.tsx";
+import GigConnection from "./pages/GigConnection.tsx";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/select-mode" element={<SelectMode />} />
           <Route path="/discover" element={<Discover />} />
+          <Route path="/connection/:connectionId" element={<GigConnection />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
