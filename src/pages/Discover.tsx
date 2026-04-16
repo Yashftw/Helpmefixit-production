@@ -37,25 +37,26 @@ const Discover = () => {
   // The logic that gets triggered when you click the button 
   const handleAcceptJob = async (gigId: number) => {
     try {
+      // 1. Alert immediately to prove it clicks!
+      alert(`Button Clicked! Checking login for Gig #${gigId}...`);
+
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) {
-        toast.error("Please login to accept jobs.");
+        alert("You are NOT logged in. Please login first to accept jobs!");
         return;
       }
 
-      toast.loading("Setting up direct connection...");
+      alert("Logged in! Setting up direct connection...");
 
       const connection = await acceptGigAction(session.access_token, gigId);
 
-      toast.dismiss();
-      toast.success("Gig accepted! Transferring to chat...");
+      alert("Gig accepted! Transferring you to chat...");
 
       navigate(`/connection/${connection.id}`);
 
     } catch (error: any) {
       console.error(error);
-      toast.dismiss();
-      toast.error(error.message || "Failed to connect to this job.");
+      alert(`ERROR: ${error.message || "Failed to connect to this job."}`);
     }
   };
 
