@@ -95,15 +95,15 @@ export const getMe = async (token: string) => {
     },
     profile: profile
       ? {
-          userId: profile.id,
-          name: user.user_metadata?.name || "",
-          occupation: profile.occupation,
-          goal: profile.goal,
-          bio: profile.bio,
-          interest: profile.interest,
-          profileImage: profile.profile_image,
-          updatedAt: profile.updated_at,
-        }
+        userId: profile.id,
+        name: user.user_metadata?.name || "",
+        occupation: profile.occupation,
+        goal: profile.goal,
+        bio: profile.bio,
+        interest: profile.interest,
+        profileImage: profile.profile_image,
+        updatedAt: profile.updated_at,
+      }
       : null,
   };
 };
@@ -216,4 +216,71 @@ export const createGig = async (token: string, payload: CreateGigPayload) => {
       distanceMeters: 0,
     },
   };
+};
+
+// --------------- GIG CONNECTION & CHAT APIs --------------- //
+
+export interface Message {
+  id: string;
+  sender_id: string;
+  content: string;
+  created_at: string;
+}
+
+export const acceptGigAction = async (token: string, gigId: number) => {
+  const { data: { user }, error: authErr } = await supabase.auth.getUser(token);
+  if (authErr || !user) throw new Error("Unauthorized");
+
+  // 1. Find the parent Gig inside Supabase so we know who to connect you with
+  const { data: gigInfo, error: gigErr } = await supabase
+    .from("gigs")
+    .select("created_by")
+    .eq("id", gigId)
+    .single();
+
+  // If gig doesn't exist (like the dummy data in Discover), we generate a fake ID just for UI testing 
+  let ownerId = gigInfo?.created_by || "00000000-0000-0000-0000-000000000000";
+
+  // 2. Establish the Chat Connection
+  const { data, error } = await supabase
+    .from("gig_connections")
+    .insert({
+      gig_id: gigId,
+      worker_id: user.id,
+      owner_id: ownerId
+    })
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data;
+};
+
+export const getConnectionMessages = async (token: string, connectionId: string) => {
+  const { error: authErr } = await supabase.auth.getUser(token);
+  if (authErr) throw new Error("Unauthorized");
+
+  const { data, error } = await supabase
+    .from("messages")
+    .select("*")
+    .eq("connection_id", connectionId)
+    .order("created_at", { ascending: true });
+
+  if (error) throw error;
+  return data as Message[];
+};
+
+export const sendMessage = async (token: string, connectionId: string, content: string) => {
+  const { data: { user }, error: authErr } = await supabase.auth.getUser(token);
+  if (authErr || !user) throw new Error("Unauthorized");
+
+  const { error } = await supabase
+    .from("messages")
+    .insert({
+      connection_id: connectionId,
+      sender_id: user.id,
+      content
+    });
+
+  if (error) throw error;
 };
